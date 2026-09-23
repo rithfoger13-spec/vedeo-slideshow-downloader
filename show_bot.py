@@ -181,6 +181,7 @@ def main():
     if BOT_TOKEN == "PUT_YOUR_BOT_TOKEN_HERE" or not BOT_TOKEN:
         raise RuntimeError("Please set BOT_TOKEN (env var or .env file) before running the bot")
 
+    # ចាប់ផ្តើម Flask Keep-Alive Server (សម្រាប់ Web Service Port Binding)
     keep_alive()
 
     app = (
@@ -195,7 +196,9 @@ def main():
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
 
     logger.info("Bot starting...")
-    app.run_polling()
+    
+    # រត់ Bot Polling ធម្មតាដោយសុវត្ថិភាព
+    app.run_polling(allowed_updates=Update.ALL_TYPES)
 
 if __name__ == "__main__":
     main()
